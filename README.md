@@ -16,17 +16,64 @@ Die gesammelten Lagerstände werden ueber eine REST-Schnittstelle (in XML oder J
 
 ## Code Snippets
 
-``
-    public class WarehouseController {
+* Senden einer Nachricht an Kafka Topic "warehouse-input"
+```java
 
-        @PostMapping("/send")
-        public ResponseEntity<String> sendWarehouseData(@RequestBody WarehouseData data) {
-            // Sende Daten an Kafka Topic
-            kafkaTemplate.send("warehouse-input", data);
-            return ResponseEntity.ok("Daten gesendet");
-        }
-    }
-``
+@PostMapping("/send")
+public String sendWarehouseData(@RequestBody WarehouseData data) throws JsonProcessingException {
+    data.setTimestamp(Instant.now().toString());
+    String json = new ObjectMapper().writeValueAsString(data);
+    kafkaTemplate.send("warehouse-input", json);
+    return "SUCCESS: " + json;
+}        
+
+```
+
+* Empfangen einer Nachricht von Kafka Topic "warehouse-input"
+```java
+
+@KafkaListener(topics = "warehouse-input")
+public void receiveMessage(String message) throws Exception {
+    WarehouseData data = new ObjectMapper().readValue(message, WarehouseData.class);
+    System.out.println("Zentrale empfängt: " + message);
+    aggregator.add(data);
+} 
+        
+
+```
+
+* Hinzufügen der empfangenen Lagerdaten zur Aggregation im Zentralaggregator
+```java
+
+public synchronized void add(WarehouseData data) {
+    aggregated.add(data);
+}
+
+
+```
+
+* Abrufen der aggregierten Lagerdaten in JSON Format
+```java
+
+@GetMapping(value = "/stock", produces = MediaType.APPLICATION_JSON_VALUE)
+public List<WarehouseData> getJsonStock() {
+    return aggregator.getAll();
+}
+        
+
+```
+
+* Abrufen der aggregierten Lagerdaten in XML Format
+```java
+
+@GetMapping(value = "/stock.xml", produces = MediaType.APPLICATION_XML_VALUE)
+public WarehousesXml getXmlStock() {
+    return new WarehousesXml(aggregator.getAll());
+} 
+        
+
+```
+
 
 ## Fragestellung für Protokoll
 
