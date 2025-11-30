@@ -137,15 +137,20 @@ public WarehousesXml getXmlStock() {
 
 * Anlegen der Topics in Kafka (Optional hier zur demonstration)
 
+```
 
-    docker exec -it kafka bash
-    [appuser@c113f19e1521 ~]$ kafka-topics --create --topic warehouse-input --bootstrap-server localhost:9092
-    Created topic warehouse-input.
-    ^[[C[appuser@c113f19e1521 ~]$ kafka-topics --create --topic warehouse-response --bootstrap-server localhost:9092
-    Created topic warehouse-response.
-    [appuser@c113f19e1521 ~]$ kafka-topics --list --bootstrap-server localhost:9092
-    warehouse-input
-    warehouse-response
+docker exec -it kafka bash
+[appuser@c113f19e1521 ~]$ kafka-topics --create --topic warehouse-input --bootstrap-server localhost:9092
+Created topic warehouse-input.
+^[[C[appuser@c113f19e1521 ~]$ kafka-topics --create --topic warehouse-response --bootstrap-server localhost:9092
+Created topic warehouse-response.
+[appuser@c113f19e1521 ~]$ kafka-topics --list --bootstrap-server localhost:9092
+warehouse-input
+warehouse-response
+        
+
+```
+
 
 ## Links & Dokumente
 
