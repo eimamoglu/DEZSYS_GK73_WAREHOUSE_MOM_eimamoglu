@@ -1,19 +1,6 @@
 # DEZSYS_GK73_WAREHOUSE_MOM
 Verfasser: Elyesa Imamoglu, 4CHIT
 
-## Einführung
-
-Diese Übung soll die Funktionsweise und Implementierung von eine Message Oriented Middleware (MOM) mit Hilfe des **Frameworks Apache Kafka** demonstrieren. **Message Oriented Middleware (MOM)** ist neben InterProcessCommunication (IPC), Remote Objects (RMI) und Remote Procedure Call (RPC) eine weitere Möglichkeit um eine Kommunikation zwischen mehreren Rechnern umzusetzen.
-
-Die Umsetzung bas
-Die Umsetzung basiert auf einem praxisnahen Beispiel eines Warenlagers. Die Zentrale des Warenlagers moechte jede Stunde den aktuellen Lagerstand aller Lagerstandorte abfragen.
-
-Mit diesem Ziel soll die REST-Applikation aus MidEng 7.1 Warehouse REST and Dataformats bei einem entsprechenden Request http://<IP Wahllokal>/warehouse/send die Daten (JSON oder XML) in eine Message Queue der Zentral uebertragen. 
-In regelmaessigen Abstaenden werden alle Message Queues der Zentrale abgefragt und die Daten aller Standorte gesammelt.
-
-Die gesammelten Lagerstände werden ueber eine REST-Schnittstelle (in XML oder JSON) dem Berichtswesen des Managements zur Verfuegung gestellt.
-
-
 ## Code Snippets
 
 * Senden einer Nachricht an Kafka Topic "warehouse-input"
