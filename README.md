@@ -16,7 +16,7 @@ Die gesammelten Lagerstände werden ueber eine REST-Schnittstelle (in XML oder J
 
 ## Code Snippets
 
-`` Java
+``Java
     public class WarehouseController {
 
         @PostMapping("/send")
