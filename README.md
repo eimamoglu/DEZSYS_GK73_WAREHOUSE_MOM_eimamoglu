@@ -50,12 +50,12 @@ Demo 1 beinhaltet eine Implementierung, die alle Einzelschritte zur Implementier
 
 *   Nennen Sie mindestens 4 Eigenschaften der Message Oriented Middleware?
 
-        Asynchronität – Sender und Empfänger müssen nicht gleichzeitig online sein
-        Entkopplung – Sender kennt Empfänger nicht
-        Zuverlässigkeit – Nachrichten gehen nicht verloren (Persistenz, Acknowledgements)
-        Skalierbarkeit – mehrere Producer/Consumer möglich
-        Persistente Speicherung – Nachrichten können auf Platte gespeichert werden
-        Lastverteilung – mehrere Consumer teilen sich Nachrichten
+    Asynchronität – Sender und Empfänger müssen nicht gleichzeitig online sein
+    Entkopplung – Sender kennt Empfänger nicht
+    Zuverlässigkeit – Nachrichten gehen nicht verloren (Persistenz, Acknowledgements)
+    Skalierbarkeit – mehrere Producer/Consumer möglich
+    Persistente Speicherung – Nachrichten können auf Platte gespeichert werden
+    Lastverteilung – mehrere Consumer teilen sich Nachrichten
 
 *   Was versteht man unter einer transienten und synchronen Kommunikation?
 
