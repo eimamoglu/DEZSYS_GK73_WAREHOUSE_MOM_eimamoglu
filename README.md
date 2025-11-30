@@ -1,5 +1,5 @@
 # DEZSYS_GK73_WAREHOUSE_MOM
-Join GIT repository:  https://github.com/ThomasMicheler/DEZSYS_GK73_WAREHOUSE_MOM.git
+Verfasser: Elyesa Imamoglu, 4CHIT
 
 ## Einführung
 
@@ -13,30 +13,6 @@ In regelmaessigen Abstaenden werden alle Message Queues der Zentrale abgefragt u
 
 Die gesammelten Lagerstände werden ueber eine REST-Schnittstelle (in XML oder JSON) dem Berichtswesen des Managements zur Verfuegung gestellt.
 
-## 1.1 Ziele  
-
-Das Ziel dieser Übung ist die **Implementierung einer Kommunikationsplattform für Warenlager. Dabei erfolgt ein Datenaustausch von mehreren Lagerstandorten mit der Zentrale unter Verwendung einer Message Oriented Middleware (MOM)**. Die einzelnen Daten des Warenlagers sollen an die Zentrale übertragen werden. Es sollen **nachrichtenbasierten Protokolle mit Message Queues** verwendet werden. Durch diese lose Kopplung kann gewährleistet werden, dass in Zukunft weitere Standorte hinzugefügt bzw. Kooperationspartner eingebunden werden können.
-
-Fuer die REST-Schnittstelle in der Zentralle muessen die Datenstrukturen der einzelnene Lagerstandorte zusammengefasst werden. Um die Datenintegrität zu garantieren, sollen jene Daten, die mit der Middleware übertragen werden in einer LOG-Datei abgespeichert werden.  
-
-## 1.2 Voraussetzungen
-
-*   Grundlagen Architektur von verteilten Systemen
-*   Grundlagen zur nachrichtenbasierten Systemen / Message Oriented Middleware  
-*   Verwendung des Message Brokers Apache Kafka
-*   Verwendung der XML- oder JSON Datenstruktur des Wahllokals
-*   Verwendung der Demo-Applikation MOMApplication (inklusive MOMReceiver und MOMSender) (siehe Repo)
-
-## 1.3 Aufgabenstellung
-
-Implementieren Sie die Lager-Kommunikationsplattform mit Hilfe des Java Message Service. Verwenden Sie Apache Kafka ([https://kafka.apache.org](https://kafka.apache.org)) als Message Broker Ihrer Applikation. Das Programm soll folgende Funktionen beinhalten:
-
- *   Installation von Apache Kafka in der Zentrale.
- *   Jeder Lagerstandort hat eine Message Queue mit einer ID am zentralen Rechner.
- *   Jeder Lagerstandort legt in regelmässigen Abständen die Daten des Lagers in der Message Queue ab.
- *   Bei einer erfolgreichen Übertragung sendet die Zentrale die Nachricht "SUCCESS" an den Lagerstandort retour.
- *   Der zentrale Rechner fragt in regelmässigen Abständen alle Message Queues ab.
- *   Der Zentralrechner fuegt alle Daten aller Lagerstandorte zusammen und stellt diese an einer REST Schnittstelle im JSON/XML Format zur Verfügung.
 
 ## 1.4 Demo Applikation
 
@@ -69,30 +45,36 @@ Demo 1 beinhaltet eine Implementierung, die alle Einzelschritte zur Implementier
  *   Empfang der Nachricht auf der Konsole
       Hallo Spencer
 
-## 1.5 Bewertung  
-
-*   Gruppengrösse: 1 Person
-*   Abgabemodus: per Protokoll, bei EK kann ein Abgabegespraech erforderlich sein
-*   Anforderungen **"Grundlagen"**
-    *   Implementierung der Kommunikation zwischen **EINEM** Lagerstandort und dem Zentralrechner (JMS Queue)  
-    *   Ausgabe der empfangenen Daten am Zentralrechner (Konsole oder Log-Datei)
-    *   Beantwortung der Fragestellungen   
-*   Anforderungen **"Erweiterte Grundlagen"**
-    *   Zusammensetzung der Daten aller Lagerstandorte in einer zentralen JSON/XML-Struktur
-    *   Implementierung der REST Schnittstelle am Zentralrechner
-*  Erweiterte Anforderungen **"Vertiefung"**
-    *   Implementierung der Kommunikation mit **MEHREREN** Lagerstandorte und dem Zentralrechner
-    *   Logging der Daten bei aller Lagerstandorte und dem Zentralrechner   
-    *   Rückmeldung des Ergebnisses der Übertragung vom Zentralrechner an den einzelnen Lagerstandort (JMS Topic)  
 
 ## 1.6 Fragestellung für Protokoll
 
-*   Nennen Sie mindestens 4 Eigenschaften der Message Oriented Middleware?  
+*   Nennen Sie mindestens 4 Eigenschaften der Message Oriented Middleware?
+        Asynchronität – Sender und Empfänger müssen nicht gleichzeitig online sein
+        Entkopplung – Sender kennt Empfänger nicht
+        Zuverlässigkeit – Nachrichten gehen nicht verloren (Persistenz, Acknowledgements)
+        Skalierbarkeit – mehrere Producer/Consumer möglich
+        Persistente Speicherung – Nachrichten können auf Platte gespeichert werden
+        Lastverteilung – mehrere Consumer teilen sich Nachrichten
+
 *   Was versteht man unter einer transienten und synchronen Kommunikation?
+    Transient bedeutet, Nachrichten existieren nur, solange beide Systeme aktiv sind.
+    Synchron heißt, der Sender wartet auf eine direkte Antwort und blockiert währenddessen.
+
 *   Beschreiben Sie die Funktionsweise einer JMS Queue?
+    Punkt-zu-Punkt Kommunikation
+    1 Producer -> Queue -> 1 Consumer (ein Empfänger pro Nachricht)
+    Nachrichten werden gespeichert, bis ein Consumer sie abholt (FIFO)
+    Jeder Message wird genau einmal zugestellt (exactly-once / at-least-once)
+
 *   JMS Overview - Beschreiben Sie die wichtigsten JMS Klassen und deren Zusammenhang?
+    ConnectionFactory erstellt Verbindungen, Connection verbindet zum Broker, Session erzeugt Producer/Consumer, MessageProducer sendet Nachrichten, MessageConsumer empfängt sie, und Destination beschreibt Queue oder Topic.
+
 *   Beschreiben Sie die Funktionsweise eines JMS Topic?
+    Ein Topic funktioniert nach Publish/Subscribe: Ein Publisher sendet eine Nachricht, und alle aktiven Subscriber erhalten eine Kopie.
+
 *   Was versteht man unter einem lose gekoppelten verteilten System? Nennen Sie ein Beispiel dazu. Warum spricht man hier von lose?
+    Ein lose gekoppeltes System arbeitet unabhängig voneinander, z. B. Kafka, da Sender und Empfänger nichts voneinander wissen und asynchron kommunizieren.
+
 `
 ## 1.6 Links & Dokumente
 
