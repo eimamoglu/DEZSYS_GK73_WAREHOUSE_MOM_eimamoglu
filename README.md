@@ -113,18 +113,18 @@ public WarehousesXml getXmlStock() {
 ## Wichtig fürs Testen (Terminal)
 
 * Starten der Spring Boot Applikation (Optional)
-    ./gradlew --refresh-dependencies bootRun
+    **./gradlew --refresh-dependencies bootRun**
 
 * Starten der Docker Container
-    docker compose up -d
+    **docker compose up -d**
 
 * Überprüfen ob Kafka läuft
-  docker exec -it kafka kafka-topics --list --bootstrap-server localhost:9092
+  **docker exec -it kafka kafka-topics --list --bootstrap-server localhost:9092**
 
 * Versenden von Lagerbestandsdaten an die Zentrale (Beispiel JSON)
-    curl -X POST http://localhost:8080/warehouse/send \
+    **curl -X POST http://localhost:8080/warehouse/send \
     -H "Content-Type: application/json" \
-    -d "{\"warehouseId\":\"W1\",\"quantity\":50}"
+    -d "{\"warehouseId\":\"W1\",\"quantity\":50}"**
 
 * Abrufen des Lagerbestands in XML
     http://localhost:8080/central/stock.xml
