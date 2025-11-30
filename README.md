@@ -14,39 +14,21 @@ In regelmaessigen Abstaenden werden alle Message Queues der Zentrale abgefragt u
 Die gesammelten Lagerstände werden ueber eine REST-Schnittstelle (in XML oder JSON) dem Berichtswesen des Managements zur Verfuegung gestellt.
 
 
-## 1.4 Demo Applikation
+## Code Snippets
 
-*   Installation und starten des Message Broker Apache Kafka (Container)  
-[https://kafka.apache.org/quickstart](https://kafka.apache.org/quickstart)    
+`` Java
+    public class WarehouseController {
 
-*   Erstellen einer Message Queue "quickstart-events" (Terminal/Container)   
-     `cd /opt/kafka`   
-     `bin/kafka-topics.sh --create --topic quickstart-events --bootstrap-server localhost:9092`    
+        @PostMapping("/send")
+        public ResponseEntity<String> sendWarehouseData(@RequestBody WarehouseData data) {
+            // Sende Daten an Kafka Topic
+            kafkaTemplate.send("warehouse-input", data);
+            return ResponseEntity.ok("Daten gesendet");
+        }
+    }
+``
 
-*  Senden von Nachrichten (via Terminal)    
-    `bin/kafka-console-producer.sh --topic quickstart-events --bootstrap-server localhost:9092`   
-    `> Hallo Spencer, hier ist Nachricht 1.`   
-    `> Hallo Spencer, hier ist Nachricht 2`   
-    `> Hallo Spencer, hier ist Nachricht 3.`   
-
-*  Lesen von Nachrichten (via Terminal)   
-    `bin/kafka-console-consumer.sh --topic quickstart-events --from-beginning --bootstrap-server localhost:9092`   
-
-### 1.4.1 warehouse_demo
-
-Demo 1 beinhaltet eine Implementierung, die alle Einzelschritte zur Implementierung von Java und JMS beinhaltet und uebersichtlich darstellt. 
-
- *   Starten der Demo Applikation 
-     `gradle clean bootRun`
-
- *   Senden einer Nachricht 
-      http://localhost:8080/send?message=Hallo Spencer
-
- *   Empfang der Nachricht auf der Konsole
-      Hallo Spencer
-
-
-## 1.6 Fragestellung für Protokoll
+## Fragestellung für Protokoll
 
 *   Nennen Sie mindestens 4 Eigenschaften der Message Oriented Middleware?
 
@@ -81,8 +63,42 @@ Demo 1 beinhaltet eine Implementierung, die alle Einzelschritte zur Implementier
 
     Ein lose gekoppeltes System arbeitet unabhängig voneinander, z. B. Kafka, da Sender und Empfänger nichts voneinander wissen und asynchron kommunizieren.
 
-`
-## 1.6 Links & Dokumente
+## Wichtig fürs Testen (Terminal)
+
+* Starten der Spring Boot Applikation (Optional)
+    ./gradlew --refresh-dependencies bootRun
+
+* Starten der Docker Container
+    docker compose up -d
+
+* Überprüfen ob Kafka läuft
+  docker exec -it kafka kafka-topics --list --bootstrap-server localhost:9092
+
+* Versenden von Lagerbestandsdaten an die Zentrale (Beispiel JSON)
+    curl -X POST http://localhost:8080/warehouse/send \
+    -H "Content-Type: application/json" \
+    -d "{\"warehouseId\":\"W1\",\"quantity\":50}"
+
+* Abrufen des Lagerbestands in XML
+    http://localhost:8080/central/stock.xml
+
+* Abrufen des Lagerbestands in JSON
+    http://localhost:8080/central/stock
+
+* Versenden einer Nachricht
+    http://localhost:8080/send?message=HalloSpencer
+
+* Anlegen der Topics in Kafka (Optional hier zur demonstration)
+    docker exec -it kafka bash
+    [appuser@c113f19e1521 ~]$ kafka-topics --create --topic warehouse-input --bootstrap-server localhost:9092
+    Created topic warehouse-input.
+    ^[[C[appuser@c113f19e1521 ~]$ kafka-topics --create --topic warehouse-response --bootstrap-server localhost:9092
+    Created topic warehouse-response.
+    [appuser@c113f19e1521 ~]$ kafka-topics --list --bootstrap-server localhost:9092
+    warehouse-input
+    warehouse-response
+
+## Links & Dokumente
 
 *   Grundlagen Message Oriented Middleware: [Presentation](https://elearning.tgm.ac.at/pluginfile.php/119077/mod_resource/content/1/dezsys_mom_einfuehrung.pdf)
 *   Middleware:  [Apache Kafka](https://kafka.apache.org/quickstart)  
