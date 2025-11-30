@@ -49,6 +49,7 @@ Demo 1 beinhaltet eine Implementierung, die alle Einzelschritte zur Implementier
 ## 1.6 Fragestellung für Protokoll
 
 *   Nennen Sie mindestens 4 Eigenschaften der Message Oriented Middleware?
+
         Asynchronität – Sender und Empfänger müssen nicht gleichzeitig online sein
         Entkopplung – Sender kennt Empfänger nicht
         Zuverlässigkeit – Nachrichten gehen nicht verloren (Persistenz, Acknowledgements)
@@ -57,22 +58,27 @@ Demo 1 beinhaltet eine Implementierung, die alle Einzelschritte zur Implementier
         Lastverteilung – mehrere Consumer teilen sich Nachrichten
 
 *   Was versteht man unter einer transienten und synchronen Kommunikation?
+
     Transient bedeutet, Nachrichten existieren nur, solange beide Systeme aktiv sind.
     Synchron heißt, der Sender wartet auf eine direkte Antwort und blockiert währenddessen.
 
 *   Beschreiben Sie die Funktionsweise einer JMS Queue?
+
     Punkt-zu-Punkt Kommunikation
     1 Producer -> Queue -> 1 Consumer (ein Empfänger pro Nachricht)
     Nachrichten werden gespeichert, bis ein Consumer sie abholt (FIFO)
     Jeder Message wird genau einmal zugestellt (exactly-once / at-least-once)
 
 *   JMS Overview - Beschreiben Sie die wichtigsten JMS Klassen und deren Zusammenhang?
+
     ConnectionFactory erstellt Verbindungen, Connection verbindet zum Broker, Session erzeugt Producer/Consumer, MessageProducer sendet Nachrichten, MessageConsumer empfängt sie, und Destination beschreibt Queue oder Topic.
 
 *   Beschreiben Sie die Funktionsweise eines JMS Topic?
+
     Ein Topic funktioniert nach Publish/Subscribe: Ein Publisher sendet eine Nachricht, und alle aktiven Subscriber erhalten eine Kopie.
 
 *   Was versteht man unter einem lose gekoppelten verteilten System? Nennen Sie ein Beispiel dazu. Warum spricht man hier von lose?
+
     Ein lose gekoppeltes System arbeitet unabhängig voneinander, z. B. Kafka, da Sender und Empfänger nichts voneinander wissen und asynchron kommunizieren.
 
 `
