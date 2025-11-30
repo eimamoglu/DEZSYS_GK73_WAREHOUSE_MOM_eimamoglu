@@ -136,6 +136,8 @@ public WarehousesXml getXmlStock() {
     http://localhost:8080/send?message=HalloSpencer
 
 * Anlegen der Topics in Kafka (Optional hier zur demonstration)
+
+
     docker exec -it kafka bash
     [appuser@c113f19e1521 ~]$ kafka-topics --create --topic warehouse-input --bootstrap-server localhost:9092
     Created topic warehouse-input.
